@@ -9,11 +9,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.app</groupId>
-	<artifactId>Project1Efarmer</artifactId>
-	<version>1</version>
+	<artifactId>day16-rest-backend</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>Project1Efarmer</name>
-	<description>Demo project for Spring Boot rest api provider</description>
+	<name>day16-rest-backend</name>
+	<description>Demo project for Spring Boot MVC</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -42,18 +42,19 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<!-- Additional dependencies only for spring MVC -->
-		<dependency>
-			<groupId>org.apache.tomcat.embed</groupId>
-			<artifactId>tomcat-embed-jasper</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 
