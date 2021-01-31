@@ -1,17 +1,22 @@
 package com.app.pojos;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Generated;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -19,30 +24,60 @@ import javax.persistence.Table;
 public class Buyers {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	
+
 	private Integer bid;
 	@Column(length=30)
 	private String bname;
 	@Column(unique=true)
    private String emailId;
-	@Column(length=30)
+	@Column(length=80)
 	private String address;
+	@Column(length=20)
 	private String district;
+	@Column(length=20)
 	private String city;
+	@Column(length=8)
 	private Integer Pincode;
+	@Column(length=20)
 	private String state;
-	@Column(length=12,unique=true,nullable = false)
-	private Integer contactNo;
-	private Integer  acccountNo;
-	@Column(length=16,unique=true,nullable = false)
-	private Integer  aadharNo;
+	@Column(length=12,unique=true)
+	private Long contactNo;
+	@Column(length=20)
+	private Long  accountNo;
+	@Column(length=16,unique=true)
+	private Long  aadharNo;
+	@Column(length=25)
 	private String licenceType;
  
 	//@OneToMany(name="bid",nullable=true)
 	//private UpdateCropBuyer updateCropBuyer;
-	
-	@OneToMany(mappedBy = "selectedBuyer",cascade = CascadeType.ALL)
+//@JsonManagedReference selectedBuyer
+   @JsonIgnoreProperties("selectedBuyer")
+	@OneToMany(mappedBy = "selectedBuyer",cascade = CascadeType.REMOVE,orphanRemoval = true,fetch = FetchType.EAGER)
 	private List<UpdateCropBuyer> crops;
+
+
+/*@JsonManagedReference 
+@Cascade(org.hibernate.annotations.CascadeType.DELETE)
+@JsonIgnoreProperties("buyers")
+	@OneToMany(mappedBy = "selectedBuyer",cascade = CascadeType.REMOVE,orphanRemoval = true,fetch=FetchType.LAZY)
+	private List<Transaction> transactions;
+	*/
+
+
+
+
+
+
+
+
+	public List<UpdateCropBuyer> getCrops() {
+	return crops;
+}
+
+public void setCrops(List<UpdateCropBuyer> crops) {
+	this.crops = crops;
+}
 
 	public Buyers() {
 		System.out.println("in ctor of "+getClass().getName());
@@ -109,25 +144,25 @@ public class Buyers {
 	public void setState(String state) {
 		this.state = state;
 	}
-	public Integer getContactNo() {
+	public Long getContactNo() {
 		return contactNo;
 	}
-	public void setContactNo(Integer contactNo) {
+	public void setContactNo(Long contactNo) {
 		this.contactNo = contactNo;
 	}
 
-	public Integer getAcccountNo() {
-		return acccountNo;
+	public Long getAccountNo() {
+		return accountNo;
 	}
 
-	public void setAcccountNo(Integer acccountNo) {
-		this.acccountNo = acccountNo;
+	public void setAccountNo(Long acccountNo) {
+		this.accountNo = acccountNo;
 	}
-	public Integer getAadharNo() {
+	public Long getAadharNo() {
 		return aadharNo;
 	}
 
-	public void setAadharNo(Integer aadharNo) {
+	public void setAadharNo(Long aadharNo) {
 		this.aadharNo = aadharNo;
 	}
 
@@ -143,7 +178,7 @@ public class Buyers {
 	public String toString() {
 		return "Buyers [bid=" + bid + ", bname=" + bname + ", emailId=" + emailId + ", address=" + address
 				+ ", district=" + district + ", city=" + city + ", Pincode=" + Pincode + ", state=" + state
-				+ ", contactNo=" + contactNo + ", acccountNo=" + acccountNo + ", aadharNo=" + aadharNo
+				+ ", contactNo=" + contactNo + ", acccountNo=" + accountNo + ", aadharNo=" + aadharNo
 				+ ", licenceType=" + licenceType + "]";
 	}
 

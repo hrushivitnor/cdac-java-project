@@ -1,24 +1,35 @@
 package com.app.pojos;
 
-import java.time.LocalDate;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @Table(name="CropAdmin")
 public class Crop {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	
+
 	private Integer cropId;
 	private String cropName;
-	private Long cropPrice;
-	@DateTimeFormat(pattern = "yyyy-mm-dd")
-	private LocalDate Date;
+	@OneToOne
+
+	//@JsonManagedReference 
+   @JsonIgnoreProperties("cropId")
+	private UpdateCropBuyer crop;
+	@OneToMany(mappedBy = "selectedcrop",cascade = CascadeType.ALL)
+	private List<Transaction> transactions;
 	
 	public Crop() {
 		System.out.println("in ctor of "+getClass().getName());
@@ -27,7 +38,7 @@ public class Crop {
 	
 	@Override
 	public String toString() {
-		return "Crop [cropId=" + cropId + ", cropName=" + cropName + ", cropPrice=" + cropPrice + ", Date=" + Date
+		return "Crop [cropId=" + cropId + ", cropName=" + cropName 
 				+ "]";
 	}
 
@@ -44,17 +55,6 @@ public class Crop {
 	public void setCropName(String cropName) {
 		this.cropName = cropName;
 	}
-	public Long getCropPrice() {
-		return cropPrice;
-	}
-	public void setCropPrice(Long cropPrice) {
-		this.cropPrice = cropPrice;
-	}
-	public LocalDate getDate() {
-		return Date;
-	}
-	public void setDate(LocalDate date) {
-		Date = date;
-	}
+	
 	
 }

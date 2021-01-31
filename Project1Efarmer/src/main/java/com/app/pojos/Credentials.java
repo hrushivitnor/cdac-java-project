@@ -13,23 +13,51 @@ import javax.persistence.Table;
 @Table(name="Credentials")
 public class Credentials {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	
 	private Integer id;
+	
+
+	
 	@Column (length=20,unique=true)
 	private String userName;
+	
 	private String password;
-	@Enumerated(EnumType.STRING)
+	
 	@Column(length = 20)
-	private Role role;
+	private String role;
 		public Credentials() {
 			System.out.println("in ctor of "+getClass().getName());
 		}
 
-   public Integer getId() {
+		
+
+	
+
+
+	public Credentials(Integer id, String userName, String password, String role) {
+			super();
+			this.id = id;
+			this.userName = userName;
+			this.password = password;
+			this.role = role;
+		}
+
+
+
+	@Override
+	public String toString() {
+		return "Credentials [id=" + id + ", userName=" + userName + ", password=" + password + ", role=" + role + "]";
+	}
+	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+
 	public String getUserName() {
 		return userName;
 	}
@@ -41,6 +69,15 @@ public class Credentials {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getRole() {
+		return role;
+	}
+
+
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 }

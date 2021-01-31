@@ -1,10 +1,14 @@
 package com.app.pojos;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -27,11 +31,13 @@ public class Producers {
 	private String state;
 	@Column(length=12)
 	private Long  contactNo;
-	private Long  acccountNo;
+	private Long  accountNo;
 	@Column(length=40)
 	private String accountDetials;
 	@Column(length=16,unique=true)
 	private Long  aadharNo;
+	@OneToMany(mappedBy = "selectedproducer",cascade = CascadeType.ALL)
+	private List<Transaction> transactions;
 	public Producers() {
 		System.out.println("in ctor of "+getClass().getName());
 	}
@@ -90,11 +96,11 @@ public class Producers {
 	public void setContactNo(Long contactNo) {
 		this.contactNo = contactNo;
 	}
-	public Long getAcccountNo() {
-		return acccountNo;
+	public Long getAccountNo() {
+		return accountNo;
 	}
-	public void setAcccountNo(Long acccountNo) {
-		this.acccountNo = acccountNo;
+	public void setAccountNo(Long accountNo) {
+		this.accountNo = accountNo;
 	}
 	public String getAccountDetials() {
 		return accountDetials;
